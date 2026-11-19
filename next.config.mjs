@@ -1,5 +1,11 @@
 /** @type {import('next').NextConfig} */
-export default { images: { remotePatterns: [
- { protocol: 'https', hostname: 'images.unsplash.com' },
- { protocol: 'https', hostname: 'images.pexels.com' },
- { protocol: 'https', hostname: '*.supabase.co' } ] } };
+export default {
+  images: {
+    unoptimized: true,
+    remotePatterns: [
+      { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "images.pexels.com" },
+      { protocol: "https", hostname: "*.supabase.co" },
+    ],
+  },
+};
