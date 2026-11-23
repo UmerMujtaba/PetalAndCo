@@ -3,9 +3,12 @@ import { useState } from 'react';
 import { formatPKR } from '@/lib/pricing';
 
 const sizes = {
-  Small: { price: 1500, scale: 0.75, slots: 4, note: 'Fits 3–4 treats' },
-  Medium: { price: 2500, scale: 1, slots: 7, note: 'Fits 6–8 treats' },
-  Large: { price: 4000, scale: 1.25, slots: 12, note: 'Fits 10–12 treats' },
+  Small: { price: 1500, scale: 0.75, slots: 4 },
+  Medium: { price: 2500, scale: 1, slots: 7 },
+  Large: { price: 4000, scale: 1.25, slots: 12 },
+  // Small: { price: 1500, scale: 0.75, slots: 4, note: 'Fits 3–4 treats' },
+  // Medium: { price: 2500, scale: 1, slots: 7, note: 'Fits 6–8 treats' },
+  // Large: { price: 4000, scale: 1.25, slots: 12, note: 'Fits 10–12 treats' },
 } as const;
 type Size = keyof typeof sizes;
 
@@ -17,12 +20,12 @@ const ribbons = {
 type Ribbon = keyof typeof ribbons;
 
 const snacks: Record<string, { price: number; icon: string }> = {
-  Chocolates: { price: 350, icon: '🍫' },
-  Chips: { price: 150, icon: '🥔' },
-  Biscuits: { price: 200, icon: '🍪' },
-  'Dry Fruits': { price: 600, icon: '🥜' },
-  'Juice Box': { price: 120, icon: '🧃' },
-  Popcorn: { price: 250, icon: '🍿' },
+  Chocolates: { price: 350, icon: "" },
+  Chips: { price: 150, icon: "" },
+  Biscuits: { price: 200, icon: "" },
+  "Dry Fruits": { price: 600, icon: "" },
+  "Juice Box": { price: 120, icon: "" },
+  Popcorn: { price: 250, icon: "" },
 };
 
 const chip = (active: boolean) =>
@@ -65,12 +68,21 @@ export default function Builder() {
           <h2 className="mb-3 text-xl">1. Basket size</h2>
           <div className="grid grid-cols-3 gap-3">
             {(Object.keys(sizes) as Size[]).map((s) => (
-              <button key={s} onClick={() => setSize(s)} aria-pressed={size === s} className={chip(size === s)}>
+              <button
+                key={s}
+                onClick={() => setSize(s)}
+                aria-pressed={size === s}
+                className={chip(size === s)}
+              >
                 {size === s && <Check />}
-                <span className="block text-3xl" style={{ transform: `scale(${sizes[s].scale})`, transformOrigin: 'left' }} aria-hidden>🧺</span>
+                {/* <span className="block text-3xl" style={{ transform: `scale(${sizes[s].scale})`, transformOrigin: 'left' }} aria-hidden>🧺</span> */}
                 <span className="mt-1 block font-medium">{s}</span>
-                <span className="block text-sm text-sage">{formatPKR(sizes[s].price)}</span>
-                <span className="block text-xs text-charcoal/60">{sizes[s].note}</span>
+                <span className="block text-sm text-sage">
+                  {formatPKR(sizes[s].price)}
+                </span>
+                <span className="block text-xs text-charcoal/60">
+                  {sizes[s].note}
+                </span>
               </button>
             ))}
           </div>
@@ -82,19 +94,48 @@ export default function Builder() {
             {Object.entries(snacks).map(([k, v]) => {
               const n = qty[k] ?? 0;
               return (
-                <div key={k} className={`flex items-center justify-between ${chip(n > 0)}`}>
-                  {n > 0 && <span className="absolute -right-2 -top-2 grid h-6 min-w-6 place-items-center rounded-full bg-gold px-1.5 text-xs text-white shadow">{n}</span>}
+                <div
+                  key={k}
+                  className={`flex items-center justify-between ${chip(n > 0)}`}
+                >
+                  {n > 0 && (
+                    <span className="absolute -right-2 -top-2 grid h-6 min-w-6 place-items-center rounded-full bg-gold px-1.5 text-xs text-white shadow">
+                      {n}
+                    </span>
+                  )}
                   <span className="flex items-center gap-3">
-                    <span className="text-2xl" aria-hidden>{v.icon}</span>
+                    <span className="text-2xl" aria-hidden>
+                      {v.icon}
+                    </span>
                     <span>
                       <span className="block font-medium">{k}</span>
-                      <span className="block text-sm text-sage">{formatPKR(v.price)}</span>
+                      <span className="block text-sm text-sage">
+                        {formatPKR(v.price)}
+                      </span>
                     </span>
                   </span>
                   <span className="flex items-center gap-2">
-                    <button aria-label={`Remove ${k}`} disabled={n === 0} onClick={() => change(k, -1)} className="grid h-8 w-8 place-items-center rounded-full border border-line text-lg transition hover:border-gold disabled:opacity-30">−</button>
-                    <span className="w-5 text-center font-medium" aria-live="polite">{n}</span>
-                    <button aria-label={`Add ${k}`} onClick={() => change(k, 1)} className="grid h-8 w-8 place-items-center rounded-full bg-charcoal text-lg text-white transition hover:bg-gold">+</button>
+                    <button
+                      aria-label={`Remove ${k}`}
+                      disabled={n === 0}
+                      onClick={() => change(k, -1)}
+                      className="grid h-8 w-8 place-items-center rounded-full border border-line text-lg transition hover:border-gold disabled:opacity-30"
+                    >
+                      −
+                    </button>
+                    <span
+                      className="w-5 text-center font-medium"
+                      aria-live="polite"
+                    >
+                      {n}
+                    </span>
+                    <button
+                      aria-label={`Add ${k}`}
+                      onClick={() => change(k, 1)}
+                      className="grid h-8 w-8 place-items-center rounded-full bg-charcoal text-lg text-white transition hover:bg-gold"
+                    >
+                      +
+                    </button>
                   </span>
                 </div>
               );
@@ -106,11 +147,24 @@ export default function Builder() {
           <h2 className="mb-3 text-xl">3. Ribbon style</h2>
           <div className="grid grid-cols-3 gap-3">
             {(Object.keys(ribbons) as Ribbon[]).map((r) => (
-              <button key={r} onClick={() => setRibbon(r)} aria-pressed={ribbon === r} className={chip(ribbon === r)}>
+              <button
+                key={r}
+                onClick={() => setRibbon(r)}
+                aria-pressed={ribbon === r}
+                className={chip(ribbon === r)}
+              >
                 {ribbon === r && <Check />}
-                <span className="mb-2 block h-3 w-full rounded-full border border-line" style={{ background: ribbons[r].color }} aria-hidden />
+                <span
+                  className="mb-2 block h-3 w-full rounded-full border border-line"
+                  style={{ background: ribbons[r].color }}
+                  aria-hidden
+                />
                 <span className="block font-medium">{r}</span>
-                <span className="block text-sm text-sage">{ribbons[r].price ? `+${formatPKR(ribbons[r].price)}` : 'Included'}</span>
+                <span className="block text-sm text-sage">
+                  {ribbons[r].price
+                    ? `+${formatPKR(ribbons[r].price)}`
+                    : "Included"}
+                </span>
               </button>
             ))}
           </div>
@@ -118,7 +172,14 @@ export default function Builder() {
 
         <section>
           <h2 className="mb-3 text-xl">4. Message card (+Rs. 150)</h2>
-          <textarea className="input" rows={3} value={msg} onChange={(e) => setMsg(e.target.value)} maxLength={200} placeholder="Write a note for the card (optional)" />
+          <textarea
+            className="input"
+            rows={3}
+            value={msg}
+            onChange={(e) => setMsg(e.target.value)}
+            maxLength={200}
+            placeholder="Write a note for the card (optional)"
+          />
         </section>
       </div>
 
@@ -126,33 +187,73 @@ export default function Builder() {
       <aside className="lg:sticky lg:top-6 lg:self-start">
         <div className="card overflow-hidden hover:translate-y-0">
           <div className="relative grid h-72 place-items-center bg-gradient-to-br from-sage/30 via-[#dfe6dc] to-ivory">
-            <div className="relative transition-transform duration-500" style={{ transform: `scale(${sizes[size].scale})` }}>
+            <div
+              className="relative transition-transform duration-500"
+              style={{ transform: `scale(${sizes[size].scale})` }}
+            >
               <div className="flex max-w-[180px] flex-wrap justify-center gap-0.5 text-2xl leading-none">
                 {previewIcons.slice(0, 14).map((ic, i) => (
                   <span key={i}>{ic}</span>
                 ))}
               </div>
-              <div className="text-center text-8xl leading-none" aria-hidden>🧺</div>
-              <div className="mx-auto -mt-10 h-3 w-24 rounded-full shadow transition-colors duration-300" style={{ background: ribbons[ribbon].color }} aria-hidden />
+              <div className="text-center text-8xl leading-none" aria-hidden>
+                🧺
+              </div>
+              <div
+                className="mx-auto -mt-10 h-3 w-24 rounded-full shadow transition-colors duration-300"
+                style={{ background: ribbons[ribbon].color }}
+                aria-hidden
+              />
             </div>
-            <span className="glass absolute left-3 top-3 rounded-full px-3 py-1 text-[11px] uppercase tracking-wider">{size} basket</span>
-            {msg && <span className="absolute bottom-3 right-3 rotate-3 rounded bg-white px-2 py-1 text-xs shadow" title={msg}>💌 Card</span>}
+            <span className="glass absolute left-3 top-3 rounded-full px-3 py-1 text-[11px] uppercase tracking-wider">
+              {size} basket
+            </span>
+            {msg && (
+              <span
+                className="absolute bottom-3 right-3 rotate-3 rounded bg-white px-2 py-1 text-xs shadow"
+                title={msg}
+              >
+                💌 Card
+              </span>
+            )}
           </div>
 
           <div className="space-y-2 p-5 text-sm">
-            <Row label={`${size} basket`} value={formatPKR(sizes[size].price)} />
+            <Row
+              label={`${size} basket`}
+              value={formatPKR(sizes[size].price)}
+            />
             {items.map(([k, n]) => (
-              <Row key={k} label={`${snacks[k].icon} ${n} × ${k}`} value={formatPKR(snacks[k].price * n)} />
+              <Row
+                key={k}
+                label={`${snacks[k].icon} ${n} × ${k}`}
+                value={formatPKR(snacks[k].price * n)}
+              />
             ))}
-            {items.length === 0 && <p className="text-charcoal/50">No snacks added yet</p>}
-            <Row label={`${ribbon} ribbon`} value={ribbons[ribbon].price ? formatPKR(ribbons[ribbon].price) : '—'} />
+            {items.length === 0 && (
+              <p className="text-charcoal/50">No snacks added yet</p>
+            )}
+            <Row
+              label={`${ribbon} ribbon`}
+              value={
+                ribbons[ribbon].price ? formatPKR(ribbons[ribbon].price) : "—"
+              }
+            />
             {msg && <Row label="Message card" value={formatPKR(150)} />}
-            {overfull && <p className="rounded-lg bg-rose/20 px-3 py-2 text-xs">That’s a lot of treats for a {size.toLowerCase()} basket. Consider a bigger size.</p>}
+            {overfull && (
+              <p className="rounded-lg bg-rose/20 px-3 py-2 text-xs">
+                That’s a lot of treats for a {size.toLowerCase()} basket.
+                Consider a bigger size.
+              </p>
+            )}
             <div className="flex items-center justify-between border-t border-line pt-3 text-lg">
               <span>Total</span>
               <span className="font-medium text-gold">{formatPKR(total)}</span>
             </div>
-            <a className="btn btn-gold mt-2 w-full" href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ''}?text=${encodeURIComponent(summary)}`}>
+            <a
+              className="btn btn-gold mt-2 w-full"
+              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ""}?text=${encodeURIComponent(summary)}`}
+            >
               Order via WhatsApp
             </a>
           </div>

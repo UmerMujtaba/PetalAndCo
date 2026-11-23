@@ -24,22 +24,35 @@ const mk = (
     popular: 10 - i,
     image: image || "",
   }));
-export const categories: { slug: Category; name: string; blurb: string }[] = [
+export const categories: {
+  slug: Category;
+  name: string;
+  blurb: string;
+  image: string;
+}[] = [
   {
     slug: "bouquets",
     name: "Bouquets",
     blurb: "Fresh flowers, hand-tied with care",
+    image: "/images/red-roses-bouquet.jpeg",
   },
-  { slug: "gift-sets", name: "Gift Sets", blurb: "Hampers for every occasion" },
+  {
+    slug: "gift-sets",
+    name: "Gift Sets",
+    blurb: "Hampers for every occasion",
+    image: "/images/gift2.jpeg",
+  },
   {
     slug: "snack-baskets",
     name: "Custom Snack Baskets",
     blurb: "Build a basket they will love",
+    image: "/images/snack1.jpeg",
   },
   {
     slug: "masehri",
     name: "Masehri Decoration",
     blurb: "Bridal canopy décor, beautifully done",
+    image: "/images/masehr3.jpeg",
   },
 ];
 export const products: Product[] = [
@@ -47,7 +60,7 @@ export const products: Product[] = [
     [
       "Classic Red Rose Bouquet",
       3500,
-      "Valentine",
+      "Valentine’s Day",
       "Twelve long-stem red roses, wrapped in ivory paper.",
       "/images/red-roses-bouquet.jpeg",
     ],
