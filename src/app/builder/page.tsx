@@ -80,9 +80,9 @@ export default function Builder() {
                 <span className="block text-sm text-sage">
                   {formatPKR(sizes[s].price)}
                 </span>
-                <span className="block text-xs text-charcoal/60">
-                  {sizes[s].note}
-                </span>
+                {/* <span className="block text-xs text-charcoal/60">
+                  {sizes[s]?.note}
+                </span> */}
               </button>
             ))}
           </div>
